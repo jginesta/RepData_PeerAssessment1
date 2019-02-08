@@ -77,7 +77,7 @@ p2
 
 The 5-minute interval, on average across all the days in the dataset, that contains the maximum number of steps is 835.
 
-##Imputing missing values
+## Imputing missing values
 
 1.What are the total number of rows with missing values in the dataset?
 
@@ -143,7 +143,7 @@ p1
 
 The mean steps per day are 10766 and the median steps per day are 10766. The difference is barely noticeable with the original calculation.
 
-4.Are there differences in activity patterns between weekdays and weekends?
+## Are there differences in activity patterns between weekdays and weekends?
 
 
 ```r
