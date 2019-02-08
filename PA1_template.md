@@ -3,12 +3,10 @@ title: "Course 1: Reproducible Research"
 output: html_document
 ---
 
-```{r global_options, include=FALSE}
-knitr::opts_chunk$set(fig.width=15, fig.height=8,
-                      echo=TRUE,eval=TRUE,options(scipen = 1, digits = 2))
-```
 
-```{r}
+
+
+```r
 activity <- read.delim("activity.csv", header=TRUE, sep=",", stringsAsFactors=FALSE, dec=".")
 
 activity$date<-as.Date(activity$date, "%Y-%m-%d")
@@ -20,7 +18,8 @@ activityClean<-activity[!is.na(activity$steps),]
 
 1.Number of steps taken per day.
 
-```{r echo=TRUE,message=FALSE,results='hide',fig.keep='all'}
+
+```r
 library(ggplot2)
 library(dplyr)
 # Sum for each month
@@ -42,16 +41,18 @@ geom_vline(aes(xintercept = median(stepsPerDay$sum_steps),color = "median"),line
 scale_color_manual(name = "statistics",values = c(median = "#00AFBB", mean = "#E7B800"))
 
 p1
-
 ```
-The mean steps per day are `r mean` and the median steps per day are `r median`.
+
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png)
+The mean steps per day are 10766 and the median steps per day are 10765.
 
 ## What is the average daily activity pattern?
 
 1.Average of number of steps taken per interval.
 
 
-```{r echo=TRUE,message=FALSE}
+
+```r
 library(ggplot2)
 library(dplyr)
 # Mean for each month
@@ -70,29 +71,31 @@ p2 <- ggplot(meanStepsPerDay, aes(x = interval, y=mean_steps)) +
 geom_line(na.rm=TRUE,color="#00AFBB") + labs(title = "Average Number of Steps Per Day") + labs(x = "Interval", y = "Number of Steps") + geom_hline(aes(yintercept = max(meanStepsPerDay$mean_steps, na.rm=TRUE),color = "max"),linetype = "dashed", size = 1) + scale_color_manual(name = "statistics",values = c(max = "#E7B800"))
 
 p2
-
 ```
 
-The 5-minute interval, on average across all the days in the dataset, that contains the maximum number of steps is `r meanInterval`.
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4-1.png)
+
+The 5-minute interval, on average across all the days in the dataset, that contains the maximum number of steps is 835.
 
 ##Imputing missing values
 
 1.What are the total number of rows with missing values in the dataset?
 
 
-```{r echo=TRUE,message=FALSE}
+
+```r
 library(ggplot2)
 library(dplyr)
 # Number of rows with missing values
 rowNA<-sum(apply(is.na(activity), 1, sum))
-
 ```
-The total number of rows with NAs is `r rowNA`.
+The total number of rows with NAs is 2304.
 
 2.Filling in all of the missing values in the dataset
 
 
-```{r echo=TRUE,message=FALSE}
+
+```r
 library(ggplot2)
 library(dplyr)
 # Mean for each month
@@ -109,11 +112,11 @@ newActAvg$steps <- ifelse(is.na(newActAvg$steps), round(newActAvg$mean_steps,1),
 
 #Drop the mean_steps column
 newActAvg$mean_steps<-NULL
-
 ```
 3.Histogram of the total number of steps taken each day.
 
-```{r echo=TRUE,message=FALSE,results='hide',fig.keep='all'}
+
+```r
 library(ggplot2)
 library(dplyr)
 # Sum for each month
@@ -134,14 +137,16 @@ geom_vline(aes(xintercept = median(stepsPerDay$sum_steps),color = "median"),line
 scale_color_manual(name = "statistics",values = c(median = "#00AFBB", mean = "#E7B800"))
 
 p1
-
 ```
 
-The mean steps per day are `r meanNA` and the median steps per day are `r medianNA`. The difference is barely noticeable with the original calculation.
+![plot of chunk unnamed-chunk-7](figure/unnamed-chunk-7-1.png)
+
+The mean steps per day are 10766 and the median steps per day are 10766. The difference is barely noticeable with the original calculation.
 
 4.Are there differences in activity patterns between weekdays and weekends?
 
-```{r echo=TRUE,message=FALSE,results='hide',fig.keep='all'}
+
+```r
 library(ggplot2)
 library(dplyr)
 
@@ -163,12 +168,14 @@ p2 <- ggplot(meanStepsWeekday, aes(x = interval, y=mean_steps)) +
 geom_line(color="#00AFBB") + facet_wrap(~weekday, ncol = 1, nrow=2)  + labs(title = "Average Number of Steps being Weekend or Weekday") + labs(x = "Interval", y = "Number of Steps") 
 
 p2
-
 ```
 
-The mean steps per day are `r meanNA` and the median steps per day are `r medianNA`. The difference is barely noticeable with the original calculation.
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8-1.png)
 
-```{r echo=TRUE,message=FALSE,results='hide',fig.keep='all'}
+The mean steps per day are 10766 and the median steps per day are 10766. The difference is barely noticeable with the original calculation.
+
+
+```r
 #library("knitr")
 #knit("PA1_template.Rmd")
 ```
